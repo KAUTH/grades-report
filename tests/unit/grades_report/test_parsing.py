@@ -7,7 +7,10 @@ Copyright (c) 2020 KAUTH
 from unittest import mock
 
 from grades_report.parsing import (
-    check_grade_attributes, check_grades_list, parse_user_input
+    check_grade_attributes,
+    check_grades_list,
+    check_personal_grade,
+    parse_user_input
 )
 
 
@@ -22,20 +25,21 @@ def test_check_grade_attributes():
     assert check_grade_attributes() == grade_attributes
 
     not_a_number = "@"
-    error = "Error: @ is not a number!"
+    error = "\nError: @ is not a number!"
 
     assert check_grade_attributes(not_a_number, passing_grade_str) == error
     assert check_grade_attributes(max_grade_str, not_a_number) == error
 
     max_grade_str = "10"
     passing_grade_str = "11"
-    error = "Error: Passing grade cannot be greater than the maximum grade!"
+    error = "\nError: Passing grade cannot be greater than the maximum grade!"
 
     assert check_grade_attributes(max_grade_str, passing_grade_str) == error
 
     negative_number = "-5"
     error = (
-        "Error: Maximum and passing grade cannot be smaller or equal to zero!"
+        "\nError: Maximum and passing grade cannot be smaller or equal to " +
+        "zero!"
     )
 
     assert check_grade_attributes(negative_number, passing_grade_str) == error
@@ -66,18 +70,34 @@ def test_check_grades_list():
     max_grade = 10
 
     assert check_grades_list(list_with_letters, max_grade) == (
-        "Error: a is not a number!"
+        "\nError:  a is not a number!"
     )
 
     assert check_grades_list(list_with_negatives, max_grade) == (
-        "Error: -3.0 is not a positive number!"
+        "\nError: -3.0 is not a positive number!"
     )
 
     assert check_grades_list(list_with_max_error, max_grade) == (
-        "Error: 12.0 is a number greater than the max grade!"
+        "\nError: 12.0 is a number greater than the max grade!"
     )
 
     assert check_grades_list(correct_list, max_grade) == correct_list
+
+
+def test_check_personal_grade():
+    personal_grade_str = 5
+
+    expected = 5
+    result = check_personal_grade(personal_grade_str)
+
+    assert result == expected
+
+    personal_grade_str = "a"
+
+    expected = "\nError: a is not a number!"
+    result = check_personal_grade(personal_grade_str)
+
+    assert result == expected
 
 
 @mock.patch("grades_report.parsing.check_grade_attributes")
@@ -88,14 +108,18 @@ def test_parse_user_input(
     grades_list = "[1, 2, 3]"
     max_grade_str = "10"
     passing_grade_str = "5"
+    personal_grade_input = 0
+
     max_grade = float(max_grade_str)
     passing_grade = float(passing_grade_str)
+    personal_grade = None
     checked_list = [1, 2, 3]
 
-    user_input = {
+    expected = {
         "checked_list": checked_list,
         "max_grade": max_grade,
-        "passing_grade": passing_grade
+        "passing_grade": passing_grade,
+        "personal_grade": personal_grade
     }
 
     mock_check_grades_attributes.return_value = {
@@ -104,6 +128,8 @@ def test_parse_user_input(
 
     mock_check_grades_list.return_value = checked_list
 
-    parse_user_input(grades_list, max_grade_str, passing_grade_str) == (
-        user_input
+    result = parse_user_input(
+        grades_list, max_grade_str, passing_grade_str, personal_grade_input
     )
+
+    assert result == expected

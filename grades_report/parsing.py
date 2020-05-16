@@ -26,7 +26,7 @@ def check_grade_attributes(max_grade_str=None, passing_grade_str=None):
             max_grade = float(max_grade_str)
 
         except ValueError:
-            error = f"Error: {max_grade_str} is not a number!"
+            error = f"\nError: {max_grade_str} is not a number!"
             print(error)
 
             return error
@@ -37,7 +37,7 @@ def check_grade_attributes(max_grade_str=None, passing_grade_str=None):
             passing_grade = float(passing_grade_str)
 
         except ValueError:
-            error = f"Error: {passing_grade_str} is not a number!"
+            error = f"\nError: {passing_grade_str} is not a number!"
             print(error)
 
             return error
@@ -46,7 +46,7 @@ def check_grade_attributes(max_grade_str=None, passing_grade_str=None):
 
         if max_grade <= 0 or passing_grade <= 0:
             error = (
-                "Error: Maximum and passing grade cannot be smaller or " +
+                "\nError: Maximum and passing grade cannot be smaller or " +
                 "equal to zero!"
             )
             print(error)
@@ -55,7 +55,7 @@ def check_grade_attributes(max_grade_str=None, passing_grade_str=None):
 
         if passing_grade > max_grade:
             error = (
-                "Error: Passing grade cannot be greater than the maximum " +
+                "\nError: Passing grade cannot be greater than the maximum " +
                 "grade!"
             )
             print(error)
@@ -92,7 +92,7 @@ def check_grades_list(unchecked_list, max_grade):
     checked_list = list()
 
     if type(unchecked_list) is str:
-        unchecked_list = unchecked_list.strip('][').split(', ')
+        unchecked_list = unchecked_list.strip('][').split(',')
 
     for item in unchecked_list:
 
@@ -100,19 +100,19 @@ def check_grades_list(unchecked_list, max_grade):
             item = float(item)
 
         except ValueError:
-            error = f"Error: {item} is not a number!"
+            error = f"\nError: {item} is not a number!"
             print(error)
 
             return error
 
         if item < 0:
-            error = f"Error: {item} is not a positive number!"
+            error = f"\nError: {item} is not a positive number!"
             print(error)
 
             return error
 
         if item > max_grade:
-            error = f"Error: {item} is a number greater than the max grade!"
+            error = f"\nError: {item} is a number greater than the max grade!"
             print(error)
 
             return error
@@ -122,8 +122,27 @@ def check_grades_list(unchecked_list, max_grade):
     return checked_list
 
 
+def check_personal_grade(personal_grade):
+    """
+    This function checks that the personal grade has the appropriate format.
+
+    :param personal_grade: the input string from the user for his personal
+    grade
+    """
+    try:
+        personal_grade = float(personal_grade)
+
+    except ValueError:
+        error = f"\nError: {personal_grade} is not a number!"
+        print(error)
+
+        return error
+
+    return personal_grade
+
+
 def parse_user_input(
-    grades_list=None, max_grade_str=None, passing_grade_str=None
+    grades_list, max_grade_str, passing_grade_str, personal_grade
 ):
     """
     This function checks that the user's input is in the correct format and
@@ -133,21 +152,41 @@ def parse_user_input(
     :param max_grade_str: the input string from the user for the maximum grade
     :param passing_grade_str: the input string from the user for the passing
     grade
+    :param personal_grade: the input string from the user for his personal
+    grade
     :return user_input: a dictionary with the values of the user's input after
     the appropriate validation
     """
     grade_attributes = check_grade_attributes(max_grade_str, passing_grade_str)
 
-    max_grade = grade_attributes["max_grade"]
-    passing_grade = grade_attributes["passing_grade"]
+    try:
+        max_grade = grade_attributes["max_grade"]
+        passing_grade = grade_attributes["passing_grade"]
 
-    if grades_list is not None:
+    except TypeError:
+        max_grade = None
+        passing_grade = None
+
+    if grades_list != "False":
         checked_list = check_grades_list(grades_list, max_grade)
+
+    else:
+        error = "\nError: You must provide a list of grades!"
+        print(error)
+
+        checked_list = None
+
+    if personal_grade != 0:
+        personal_grade = check_personal_grade(personal_grade)
+
+    else:
+        personal_grade = None
 
     user_input = {
         "checked_list": checked_list,
         "max_grade": max_grade,
-        "passing_grade": passing_grade
+        "passing_grade": passing_grade,
+        "personal_grade": personal_grade
     }
 
     return user_input
