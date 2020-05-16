@@ -11,7 +11,7 @@ from stats import (
     mean_grade, relative_grade_percentage, total_graded, total_passed
 )
 
-# TO-DO: Don't forget to add tests for the CLI
+# TO-DO: Add tests for the CLI
 
 
 def cli_output(user_input):
@@ -68,6 +68,16 @@ def cli_output(user_input):
 
 @click.command()
 @click.option(
+    '--file-grades',
+    "-f",
+    default=("False", ","),
+    type=(str, str),
+    help=(
+        "The path of the file that the grades are to be inserted from " +
+        "followed by a space and the delimeter for the file."
+        )
+    )
+@click.option(
     "--grades-list",
     "-l",
     default="False",
@@ -108,7 +118,7 @@ def cli_output(user_input):
         "that the given grade is one of the grades in the grades list."
     )
 )
-def cli(grades_list, max_grade, passing_grade, personal_grade):
+def cli(file_grades, grades_list, max_grade, passing_grade, personal_grade):
     """
     A tool that shows useful statistics and generates a report about a set of
     given grades.
@@ -119,10 +129,12 @@ def cli(grades_list, max_grade, passing_grade, personal_grade):
 
     2. grades-report -l "[4, 8, 7.5, 6, 9]"
 
+    3. grades-report -f /home/grades.csv ,
+
     You can find the source code at https://github.com/KAUTH/grades-report.
     """
     user_input = parse_user_input(
-        grades_list, max_grade, passing_grade, personal_grade
+        file_grades, grades_list, max_grade, passing_grade, personal_grade
     )
 
     cli_output(user_input)

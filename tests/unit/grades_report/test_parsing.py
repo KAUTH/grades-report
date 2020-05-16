@@ -5,11 +5,13 @@ Copyright (c) 2020 KAUTH
 """
 
 from unittest import mock
+import os
 
 from grades_report.parsing import (
     check_grade_attributes,
     check_grades_list,
     check_personal_grade,
+    parse_file,
     parse_user_input
 )
 
@@ -100,11 +102,24 @@ def test_check_personal_grade():
     assert result == expected
 
 
+def test_parse_file():
+    file_path = os.path.join(
+        os.getcwd(), "tests/unit/grades_report/grades.csv"
+    )
+    delimiter = ","
+
+    expected = ["4", "4.6", "5", "8", "10"]
+    result = parse_file(file_path, delimiter)
+
+    assert result == expected
+
+
 @mock.patch("grades_report.parsing.check_grade_attributes")
 @mock.patch("grades_report.parsing.check_grades_list")
 def test_parse_user_input(
     mock_check_grades_list, mock_check_grades_attributes
 ):
+    file_grades = ("False", ",")
     grades_list = "[1, 2, 3]"
     max_grade_str = "10"
     passing_grade_str = "5"
@@ -129,7 +144,11 @@ def test_parse_user_input(
     mock_check_grades_list.return_value = checked_list
 
     result = parse_user_input(
-        grades_list, max_grade_str, passing_grade_str, personal_grade_input
+        file_grades,
+        grades_list,
+        max_grade_str,
+        passing_grade_str,
+        personal_grade_input
     )
 
     assert result == expected

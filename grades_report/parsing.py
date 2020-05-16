@@ -128,6 +128,8 @@ def check_personal_grade(personal_grade):
 
     :param personal_grade: the input string from the user for his personal
     grade
+    :return personal_grade: return the number as a float or an error if the
+    input is not a number
     """
     try:
         personal_grade = float(personal_grade)
@@ -141,13 +143,33 @@ def check_personal_grade(personal_grade):
     return personal_grade
 
 
+def parse_file(file_path, delimiter):
+    """
+    This function parses the file given and produces as output a list of the
+    grades according to the delimiter.
+
+    :param file_path: the path of the file with the grades
+    :param delimiter: the delimiter used in order to seperate the grades in the
+    file
+
+    :return file_grades_list: the list of grades
+    """
+    with open(file_path, 'r') as file:
+        content = file.read()
+        file_grades_list = content.split(delimiter)
+
+    return file_grades_list
+
+
 def parse_user_input(
-    grades_list, max_grade_str, passing_grade_str, personal_grade
+    file_grades, grades_list, max_grade_str, passing_grade_str, personal_grade
 ):
     """
     This function checks that the user's input is in the correct format and
     returns the user's input after the appropriate preprocessing.
 
+    :param file_grades: a tuple of type (string, string), where the user gives
+    as input the file path of the grades and the delimiter used for the file
     :param grades_list: the input string from the user for the list of grades
     :param max_grade_str: the input string from the user for the maximum grade
     :param passing_grade_str: the input string from the user for the passing
@@ -169,6 +191,10 @@ def parse_user_input(
 
     if grades_list != "False":
         checked_list = check_grades_list(grades_list, max_grade)
+
+    elif file_grades[0] != "False":
+        file_grades_list = parse_file(file_grades[0], file_grades[1])
+        checked_list = check_grades_list(file_grades_list, max_grade)
 
     else:
         error = "\nError: You must provide a list of grades!"
