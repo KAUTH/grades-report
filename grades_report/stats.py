@@ -4,7 +4,7 @@
 Copyright (c) 2020 KAUTH
 """
 
-from statistics import mean
+from statistics import mean, stdev
 
 
 def mean_grade(parsed_list, passing_grade, overall_mean=True):
@@ -21,12 +21,99 @@ def mean_grade(parsed_list, passing_grade, overall_mean=True):
         passing_grades_list = (
             [item for item in parsed_list if item >= passing_grade]
         )
-        mean_value = mean(passing_grades_list)
+
+        if len(passing_grades_list) > 0:
+            mean_value = mean(passing_grades_list)
+
+        else:
+            mean_value = 0.0
 
     else:
         mean_value = mean(parsed_list)
 
     return mean_value
+
+
+def stdev_grade(parsed_list, passing_grade, overall_stdev=True):
+    """
+    This function calculates the standard deviation of the given grades.
+
+    :param parsed_list: the parsed list of the grades
+    :param passing_grade: the grade passing threshold
+    :param overall_stdev: True, when calculating the standard deviation of all
+    the grades, False, when calculating the standard deviation of the passing
+    grades
+    :return: the standard deviation of the given as input parsed list
+    """
+    if overall_stdev is False:
+        passing_grades_list = (
+            [item for item in parsed_list if item >= passing_grade]
+        )
+
+        if len(passing_grades_list) > 1:
+            stdev_value = stdev(passing_grades_list)
+
+        else:
+            stdev_value = "- (requires at least two data points)"
+
+    else:
+        stdev_value = stdev(parsed_list)
+
+    return stdev_value
+
+
+def maximum_grade(parsed_list, passing_grade, overall_max=True):
+    """
+    This function calculates the maximum grade from the given grades.
+
+    :param parsed_list: the parsed list of the grades
+    :param passing_grade: the grade passing threshold
+    :param overall_max: True, when calculating the maximum of all the grades,
+    False, when calculating the maximum of the passing grades
+    :return: the maximum element of the given as input parsed list
+    """
+    if overall_max is False:
+        passing_grades_list = (
+            [item for item in parsed_list if item >= passing_grade]
+        )
+
+        if len(passing_grades_list) > 0:
+            max_value = max(passing_grades_list)
+
+        else:
+            max_value = "-"
+
+    else:
+        max_value = max(parsed_list)
+
+    return max_value
+
+
+def minimum_grade(parsed_list, passing_grade, overall_min=True):
+    """
+    This function calculates the minimum grade from the given grades.
+
+    :param parsed_list: the parsed list of the grades
+    :param passing_grade: the grade passing threshold
+    :param overall_min: True, when calculating the minimum of all the grades,
+    False, when calculating the minimum of the passing grades
+    :return: the minimum element of the given as input parsed list
+    """
+    if overall_min is False:
+        passing_grades_list = (
+            [item for item in parsed_list if item >= passing_grade]
+        )
+
+        if len(passing_grades_list) > 0:
+            min_value = min(passing_grades_list)
+
+        else:
+            min_value = "-"
+
+    else:
+        min_value = min(parsed_list)
+
+    return min_value
 
 
 def total_graded(parsed_list):
@@ -91,6 +178,42 @@ def relative_grade_percentage(
         )
 
     total_lower_grades = len(lower_grades)
-    relative_grade_percentage = (total_lower_grades / total_grades) * 100
+
+    if (total_grades > 0):
+        relative_grade_percentage = (total_lower_grades / total_grades) * 100
+
+    else:
+        relative_grade_percentage = 0.0
 
     return relative_grade_percentage
+
+
+def grade_distribution(parsed_list, max_grade, bin_number=10):
+    """
+    This funtion calculates the distribution of the given grades by splitting
+    them into 'n' equal bins (intervals) and finding the number of grades
+    corresponding to each bin. The bins are left-closed, right-open:
+    [a, b) = x | a <= x < b, except from the last one that is closed:
+    [c, d] = x | c <= x <= d.
+
+    :param parsed_list: the parsed list of the grades
+    :param max_grade: the maximum grade that you can score
+    :param bin_number: the number of bins that is calculated in the
+    distribution, default is 10
+    :return: a list of the number of grades in each bin
+    """
+    bin_length = max_grade / bin_number
+    grade_distribution_list = [0] * bin_number
+
+    for item in parsed_list:
+        index = int(item / bin_length)
+
+        if index == bin_number:
+            grade_distribution_list[index-1] = (
+                grade_distribution_list[index-1] + 1
+            )
+
+        else:
+            grade_distribution_list[index] = grade_distribution_list[index] + 1
+
+    return grade_distribution_list

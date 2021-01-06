@@ -5,7 +5,14 @@ Copyright (c) 2020 KAUTH
 """
 
 from grades_report.stats import (
-    mean_grade, relative_grade_percentage, total_graded, total_passed
+    grade_distribution,
+    maximum_grade,
+    mean_grade,
+    minimum_grade,
+    relative_grade_percentage,
+    stdev_grade,
+    total_graded,
+    total_passed
 )
 
 
@@ -20,6 +27,51 @@ def test_mean_grade():
 
     expected = 7
     result = mean_grade(parsed_list, passing_grade, False)
+
+    assert result == expected
+
+
+def test_stdev_grade():
+    parsed_list = [2, 4, 6, 8]
+    passing_grade = 5
+
+    expected = 2.581988897471611
+    result = stdev_grade(parsed_list, passing_grade, True)
+
+    assert result == expected
+
+    expected = 1.4142135623730951
+    result = stdev_grade(parsed_list, passing_grade, False)
+
+    assert result == expected
+
+
+def test_max_grade():
+    parsed_list = [2, 4, 6, 8]
+    passing_grade = 5
+
+    expected = 8
+    result = maximum_grade(parsed_list, passing_grade, True)
+
+    assert result == expected
+
+    expected = 8
+    result = maximum_grade(parsed_list, passing_grade, False)
+
+    assert result == expected
+
+
+def test_min_grade():
+    parsed_list = [2, 4, 6, 8]
+    passing_grade = 5
+
+    expected = 2
+    result = minimum_grade(parsed_list, passing_grade, True)
+
+    assert result == expected
+
+    expected = 6
+    result = minimum_grade(parsed_list, passing_grade, False)
 
     assert result == expected
 
@@ -63,5 +115,15 @@ def test_relative_grade_percentage():
     result = relative_grade_percentage(
         parsed_list, passing_grade, personal_grade, overall_percentage
     )
+
+    assert result == expected
+
+
+def test_grade_distribution():
+    parsed_list = [0, 2, 4, 5, 5.2, 6, 7, 7.8, 10]
+    max_grade = 10
+
+    expected = [1, 0, 1, 0, 1, 2, 1, 2, 0, 1]
+    result = grade_distribution(parsed_list, max_grade)
 
     assert result == expected

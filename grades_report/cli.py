@@ -8,7 +8,14 @@ import click
 
 from parsing import parse_user_input
 from stats import (
-    mean_grade, relative_grade_percentage, total_graded, total_passed
+    grade_distribution,
+    maximum_grade,
+    mean_grade,
+    minimum_grade,
+    relative_grade_percentage,
+    stdev_grade,
+    total_graded,
+    total_passed
 )
 
 # TO-DO: Add tests for the CLI
@@ -40,12 +47,32 @@ def cli_output(user_input):
     mean_passing_grades = mean_grade(checked_list, passing_grade, False)
     mean_total_grades = mean_grade(checked_list, passing_grade, True)
 
+    stdev_passing_grades = stdev_grade(checked_list, passing_grade, False)
+    stdev_total_grades = stdev_grade(checked_list, passing_grade, True)
+
+    # max_passing_grade = maximum_grade(checked_list, passing_grade, False)
+    max_total_grade = maximum_grade(checked_list, passing_grade, True)
+
+    min_passing_grade = minimum_grade(checked_list, passing_grade, False)
+    min_total_grade = minimum_grade(checked_list, passing_grade, True)
+
     print(f"\n# Graded: {number_graded}")
     print(f"# Passed: {number_passed}")
     print(f"# Failed: {number_failed}\n")
 
+    print("----------------------------------------------------- \n")
+
     print(f"Arithmetic Mean of PASSING GRADES: {mean_passing_grades}")
-    print(f"Arithmetic Mean of TOTAL GRADES: {mean_total_grades}")
+    print(f"Arithmetic Mean of TOTAL GRADES: {mean_total_grades}\n")
+
+    print(f"Standard Deviation of PASSING GRADES: {stdev_passing_grades}")
+    print(f"Standard Deviation of TOTAL GRADES: {stdev_total_grades}\n")
+
+    print(f"Max TOTAL GRADE: {max_total_grade}")
+    print(
+        f"Min PASSING GRADE: {min_passing_grade} & Min TOTAL GRADE: " +
+        f"{min_total_grade}"
+    )
 
     if personal_grade is not None:
         overall_relative_grade_percentage = relative_grade_percentage(
@@ -55,6 +82,7 @@ def cli_output(user_input):
             checked_list, passing_grade, personal_grade, False
         )
 
+        print("\n-----------------------------------------------------")
         print(f"\nYour grade: {personal_grade}")
         print(
             f"You scored above {overall_relative_grade_percentage}% of all " +
@@ -65,6 +93,26 @@ def cli_output(user_input):
             "passing grades."
         )
 
+    bin_number = 10
+    bin_length = max_grade / bin_number
+    grade_distribution_list = grade_distribution(
+        checked_list, max_grade, bin_number
+    )
+
+    print("\n-----------------------------------------------------")
+    print("\nGRADE       TOTAL")
+
+    for bin in range(0, bin_number - 1):
+        print(
+            f"[{bin * bin_length}-{bin * bin_length + bin_length})" +
+            f"      {grade_distribution_list[bin]}"
+        )
+
+    print(
+        f"[{(bin_number - 1) * bin_length}-{bin_number * bin_length}]" +
+        f"     {grade_distribution_list[bin_number - 1]}"
+    )
+
 
 @click.command()
 @click.option(
@@ -73,8 +121,10 @@ def cli_output(user_input):
     default=("False", ","),
     type=(str, str),
     help=(
-        "The path of the file that the grades are to be inserted from " +
-        "followed by a space and the delimeter for the file."
+        "The path of the file that the grades are to be inserted from, " +
+        "followed by a space and the delimeter for the file. For the path " +
+        "in Windows make sure to use double backslashes, \\\\, or a single " +
+        "forwardslash, /."
         )
     )
 @click.option(
