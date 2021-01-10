@@ -6,8 +6,8 @@ Copyright (c) 2020 KAUTH
 
 import click
 
-from parsing import parse_user_input
-from stats import (
+from grades_report.parsing import parse_user_input
+from grades_report.stats import (
     grade_distribution,
     maximum_grade,
     mean_grade,

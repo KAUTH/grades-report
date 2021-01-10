@@ -1,0 +1,6 @@
+# This file is necessary to tell setuptools to include the given files when
+# generating source distributions. Otherwise, only Python files will be 
+# included.
+
+include README.md LICENSE requirements.txt Pipfile Pipfile.lock
+recursive-include tests *.py
