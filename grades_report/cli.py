@@ -122,9 +122,9 @@ def cli_output(user_input):
     type=(str, str),
     help=(
         "The path of the file that the grades are to be inserted from, " +
-        "followed by a space and the delimeter for the file. For the path " +
+        "followed by a space and the delimiter for the file. For the path " +
         "in Windows make sure to use double backslashes, \\\\, or a single " +
-        "forwardslash, /."
+        "forward slash, /."
         )
     )
 @click.option(

@@ -23,7 +23,7 @@ if sys.argv[-1] == "publish":
 with open(os.path.join(here, "grades_report", "__version__.py"), "r") as f:
     exec(f.read(), about)
 
-with open("README.md", "r") as fh:
+with open("README.md", "r", encoding="utf8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
