@@ -1,5 +1,6 @@
 [![Build Status](https://github.com/KAUTH/grades-report/workflows/Python%20tests/badge.svg)](https://github.com/KAUTH/grades-report/actions?query=workflow%3A%22Python+tests%22)
 [![codecov](https://codecov.io/gh/KAUTH/grades-report/branch/master/graph/badge.svg)](https://codecov.io/gh/KAUTH/grades-report)
+[![pypi](https://img.shields.io/pypi/v/grades-report.svg)](https://pypi.python.org/pypi/grades-report)
 [![GitHub license](https://img.shields.io/github/license/KAUTH/grades-report)](https://github.com/KAUTH/grades-report/blob/master/LICENSE)
 
 # grades-report 📝
