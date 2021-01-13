@@ -16,8 +16,8 @@ test_requirements = ["pytest>=3"]
 
 # 'setup.py publish' shortcut.
 if sys.argv[-1] == "publish":
-    os.system("python setup.py sdist")
-    os.system("python setup.py sdist upload")
+    os.system("python setup.py sdist bdist_wheel")
+    os.system("twine upload dist/*")
     sys.exit()
 
 with open(os.path.join(here, "grades_report", "__version__.py"), "r") as f:

@@ -23,12 +23,12 @@ py38-tests:
 # https://packaging.python.org/guides/using-testpypi/
 publish-test:
 	pip install 'twine>=1.5.0'
-	python setup.py sdist
+	python setup.py sdist bdist_wheel
 	twine upload --repository testpypi dist/*
 	rm -fr build dist .egg requests.egg-info
 
 publish:
 	pip install 'twine>=1.5.0'
-	python setup.py sdist
+	python setup.py sdist bdist_wheel
 	twine upload dist/*
 	rm -fr build dist .egg requests.egg-info
