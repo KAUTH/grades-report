@@ -31,6 +31,7 @@ setuptools.setup(
     version=about["__version__"],
     author="KAUTH",
     author_email="konpap1996@hotmail.com",
+    url="https://github.com/KAUTH/grades-report",
     description="Get info and stats about grades",
     long_description=long_description,
     long_description_content_type="text/markdown",
