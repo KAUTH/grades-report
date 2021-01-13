@@ -29,6 +29,4 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
         python setup.py sdist bdist_wheel
-        twine upload --skip-existing dist/*
-      # --skip-existing: Continue uploading files if one already exists. 
-      # (Only valid when uploading to PyPI. Other implementations may not support this.)
+        twine upload dist/*
