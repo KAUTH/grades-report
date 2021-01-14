@@ -80,7 +80,7 @@ GRADE       TOTAL
 
 ```grades-report -l "[4, 8, 7.5, 6, 9]" -pg 8```
 
-* Creates a report for the grades given in the file grades.csv, with the "," character used as a delimiter (for the path in Windows make sure to use double backslashes, \\\\, or a single forward slash, /.):
+* Creates a report for the grades given in the file grades.csv, with the "," character used as a delimiter (for the path in Windows make sure to use double backslashes, \\\\, or a single forward slash, /):
 
 ```grades-report -f /home/grades.csv ,```
 
