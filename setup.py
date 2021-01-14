@@ -14,10 +14,20 @@ about = {}
 requirements = ["markdown", "click>=7.1.2"]
 test_requirements = ["pytest>=3"]
 
-# 'setup.py publish' shortcut.
+# 'python setup.py publish' shortcut.
 if sys.argv[-1] == "publish":
     os.system("python setup.py sdist bdist_wheel")
     os.system("twine upload dist/*")
+    sys.exit()
+
+# 'python setup.py test-publish' shortcut.
+if sys.argv[-1] == "test-publish":
+    os.system("python setup.py sdist bdist_wheel")
+    os.system("echo 'Running twine check...'")
+    os.system("twine check dist/*")
+    os.system(
+        "twine upload --repository-url https://test.pypi.org/legacy/ dist/*"
+    )
     sys.exit()
 
 with open(os.path.join(here, "grades_report", "__version__.py"), "r") as f:
