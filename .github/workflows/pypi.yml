@@ -4,7 +4,8 @@ name: PyPI
 
 on:
   push:
-    branches: [ master ]
+    tags:
+    - '*'
 
 jobs:
   deploy:
