@@ -39,7 +39,7 @@ jobs:
     # Upload coverage
     - name: Upload the coverage to Codecov
       # Link for reference: https://github.com/codecov/codecov-action
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v2.0.3
       with:
         flags: all-tests
         name: coverage
