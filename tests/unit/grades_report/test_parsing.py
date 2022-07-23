@@ -1,18 +1,17 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 Copyright (c) 2020 KAUTH
 """
 
-from unittest import mock
 import os
+from unittest import mock
 
 from grades_report.parsing import (
     check_grade_attributes,
     check_grades_list,
     check_personal_grade,
     parse_file,
-    parse_user_input
+    parse_user_input,
 )
 
 
@@ -104,7 +103,7 @@ def test_check_personal_grade():
 
 def test_parse_file():
     file_path = os.path.join(
-        os.getcwd(), "tests/unit/grades_report/grades.csv"
+        os.getcwd(), "tests/unit/grades_report/test_csv_files/grades.csv"
     )
     delimiter = ","
 

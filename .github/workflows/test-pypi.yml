@@ -6,8 +6,8 @@ on:
   push:
     branches: [ master ]
     # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#onpushpull_requestpaths
-    # The filter determines if a workflow should run by evaluating the changed files and running them against the paths-ignore or paths list. 
-    # If there are no files changed, the workflow will not run.  
+    # The filter determines if a workflow should run by evaluating the changed files and running them against the paths-ignore or paths list.
+    # If there are no files changed, the workflow will not run.
     paths:
       - 'grades_report/__version__.py'
 
@@ -20,7 +20,7 @@ jobs:
     - uses: actions/setup-python@v4
       with:
         python-version: '3.7'
-    
+
     # Publishes the new version for TestPyPI
     - name: Build the distribution
       run: python setup.py sdist
