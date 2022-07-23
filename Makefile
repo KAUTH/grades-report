@@ -32,3 +32,8 @@ publish:
 	python setup.py sdist bdist_wheel
 	twine upload dist/*
 	rm -fr build dist .egg requests.egg-info
+
+update-reqs-files:
+	pipenv lock
+	pipenv requirements > requirements.txt
+	pipenv requirements --dev-only > dev-requirements.txt
