@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 Copyright (c) 2020 KAUTH
 """
@@ -15,7 +14,7 @@ from grades_report.stats import (
     relative_grade_percentage,
     stdev_grade,
     total_graded,
-    total_passed
+    total_passed,
 )
 
 # TO-DO: Add tests for the CLI

@@ -68,7 +68,7 @@ GRADE       TOTAL
 
 # Example usage
 
-* To learn how to use the CLI tool just type: 
+* To learn how to use the CLI tool just type:
 
 ```grades-report --help```
 

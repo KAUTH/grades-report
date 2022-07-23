@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 Copyright (c) 2020 KAUTH
 """
 
 import os
-import setuptools
 import sys
+
+import setuptools
 
 here = os.path.abspath(os.path.dirname(__file__))
 about = {}
@@ -30,10 +30,10 @@ if sys.argv[-1] == "test-publish":
     )
     sys.exit()
 
-with open(os.path.join(here, "grades_report", "__version__.py"), "r") as f:
+with open(os.path.join(here, "grades_report", "__version__.py")) as f:
     exec(f.read(), about)
 
-with open("README.md", "r", encoding="utf8") as fh:
+with open("README.md", encoding="utf8") as fh:
     long_description = fh.read()
 
 setuptools.setup(

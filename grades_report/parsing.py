@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 Copyright (c) 2020 KAUTH
 """
@@ -154,7 +153,7 @@ def parse_file(file_path, delimiter):
 
     :return file_grades_list: the list of grades
     """
-    with open(file_path, 'r') as file:
+    with open(file_path) as file:
         content = file.read()
         file_grades_list = content.split(delimiter)
 

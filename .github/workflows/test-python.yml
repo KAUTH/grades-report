@@ -25,17 +25,17 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: 3.7
-    
+
     # Install dependencies
     - name: Install pip, tox and coverage
       run: |
         python -m pip install --upgrade pip
         pip install tox coverage
-    
+
     # Python tests
     - name: Run Python tests
       run: make all-tests
-    
+
     # Upload coverage
     - name: Upload the coverage to Codecov
       # Link for reference: https://github.com/codecov/codecov-action

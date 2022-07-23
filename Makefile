@@ -20,6 +20,11 @@ py37-tests:
 py38-tests:
 	tox -re py38,pep8
 
+precommit:
+	pre-commit install
+	pre-commit autoupdate
+	pre-commit run --all-files --show-diff-on-failure
+
 # https://packaging.python.org/guides/using-testpypi/
 publish-test:
 	pip install 'twine>=1.5.0'
